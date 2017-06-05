@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="zh-Hant-Tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>魔力寶貝轉保資料</title>
+    <!--link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="author" href="humans.txt">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">魔力寶貝轉保資料</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a data-toggle="tab" href="#calc">轉保計算</a></li>
+                    <li><a data-toggle="tab" href="#prestige">各階段稱號</a></li>
+                    <li><a data-toggle="tab" href="#suggest">稱號推算</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="tab-content">
+        <div id="calc" class="tab-pane fade in active" style="padding-top:100px;padding-left:30px;">
+            現有稱號：
+            <select id="selectCurrent" onchange="calcCurrent()">
+                <option value="0">無名的旅人</option>
+                <option value="1">路旁的落葉</option>
+                <option value="2">水面上的小草</option>
+                <option value="3">呢喃的歌聲</option>
+                <option value="4">地上的月影</option>
+                <option value="5">奔跑的春風</option>
+                <option value="6">蒼之風雲</option>
+                <option value="7">搖曳的金星</option>
+                <option value="8">歡喜的慈雨</option>
+                <option value="9">蘊含的太陽</option>
+            </select>
+            <select id="currentRate" onchange="calcCurrent()">
+                <option value="0">(0/4)對你的稱號一點興趣也沒有</option>
+                <option value="25">(1/4)達成率1/4</option>
+                <option value="50">(2/4)毛毛蟲少女與蟑螂帥哥</option>
+                <option value="75">(3/4)愛諂媚的勇者</option>
+            </select>
+            <br>
+            <br> 目標稱號：
+            <select id="selectTarget" onchange="calcGoal()">
+                <option value="0">無名的旅人</option>
+                <option value="1">路旁的落葉</option>
+                <option value="2">水面上的小草</option>
+                <option value="3">呢喃的歌聲</option>
+                <option value="4">地上的月影</option>
+                <option value="5">奔跑的春風</option>
+                <option value="6">蒼之風雲</option>
+                <option value="7">搖曳的金星</option>
+                <option value="8">歡喜的慈雨</option>
+                <option value="9">蘊含的太陽</option>
+                <option value="10">敬畏的寂靜</option>
+            </select>
+            <select id="targetRate" onchange="calcGoal()">
+                <option value="0">(0/4)對你的稱號一點興趣也沒有</option>
+                <option value="25">(1/4)達成率1/4</option>
+                <option value="50">(2/4)毛毛蟲少女與蟑螂帥哥</option>
+                <option value="75">(3/4)愛諂媚的勇者</option>
+            </select>
+            <br>
+            <br>
+            <p id="currentValue">當前聲望值約：0</p>
+            <p id="targetValue">目標聲望值：0</p>
+            <input type="radio" name="method" id="cumulate" checked>累計隱藏聲望值
+            <br>
+            <input type="radio" name="method" id="ignore">忽略未滿一階聲望值
+            <br>
+            <input type="submit" value="計算轉保次數" onclick="calcTimes()">
+            <div class="container-fluid" style="margin-top:30px;">
+                <p id="transMessage">
+                </p>
+            </div>
+        </div>
+        <div id="prestige" class="tab-pane fade" style="padding:70px 20px 0px 20px;">
+            <table class="table">
+                <p>戰鬥系各階段稱號與聲望值相關資訊</p>
+                <thead>
+                    <tr>
+                        <th>稱號</th>
+                        <th>累積聲望值</th>
+                        <th>下階段所需聲望值</th>
+                        <th>所需大女神蘋果數量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>無名的旅人</td>
+                        <td>0</td>
+                        <td>800</td>
+                        <td>約10顆</td>
+                    </tr>
+                    <tr>
+                        <td>路旁的落葉</td>
+                        <td>800</td>
+                        <td>800</td>
+                        <td>約10顆</td>
+                    </tr>
+                    <tr>
+                        <td>水面上的小草</td>
+                        <td>1600</td>
+                        <td>4000</td>
+                        <td>約50顆</td>
+                    </tr>
+                    <tr>
+                        <td>呢喃的歌聲</td>
+                        <td>5600</td>
+                        <td>9600</td>
+                        <td>約70顆</td>
+                    </tr>
+                    <tr>
+                        <td>地上的月影</td>
+                        <td>15200</td>
+                        <td>12800</td>
+                        <td>約160顆</td>
+                    </tr>
+                    <tr>
+                        <td>奔跑的春風</td>
+                        <td>28000</td>
+                        <td>17600</td>
+                        <td>約220顆</td>
+                    </tr>
+                    <tr>
+                        <td>蒼之風雲</td>
+                        <td>45600</td>
+                        <td>18400</td>
+                        <td>約230顆</td>
+                    </tr>
+                    <tr>
+                        <td>搖曳的金星</td>
+                        <td>64000</td>
+                        <td>28800</td>
+                        <td>約360顆</td>
+                    </tr>
+                    <tr>
+                        <td>歡喜的慈雨</td>
+                        <td>92800</td>
+                        <td>28800</td>
+                        <td>約360顆</td>
+                    </tr>
+                    <tr>
+                        <td>蘊含的太陽</td>
+                        <td>121600</td>
+                        <td>30400</td>
+                        <td>約380顆</td>
+                    </tr>
+                    <tr>
+                        <td>敬畏的寂靜</td>
+                        <td>152000</td>
+                        <td>未知</td>
+                        <td>未知</td>
+                    </tr>
+                    <tr>
+                        <td>無際的青空</td>
+                        <td>下階段未開放</td>
+                        <td>下階段未開放</td>
+                        <td>下階段未開放</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="suggest" class="tab-pane fade" style="padding:70px 20px 0px 20px;">
+            <div id="suggestInfo" style="padding:20px 0px 20px 0px;">
+                <p>以下是參照《各階段稱號》中的戰鬥系聲望資料所推算的轉保進度與次數</p>
+                <p>提供各位玩家依據自身角色的稱號進度，來安排開始進行轉保的時機點</p>
+                <p>預設顯示的資料皆無視隱藏聲望值來推算，轉保時間點較為明確</p>
+                <p>若您能夠精確掌握自身的稱號進度，以及計算擊殺的Boss數</p>
+                <p>可勾選「精確聲望推估」，參考較為詳細的版本</p>
+                <input type="checkbox" id="accurate" onclick="showAccurate()">精確聲望推估
+                <br>
+            </div>
+            <table class="table" style="" data-link="row">
+                <p>戰鬥系各階段稱號與聲望值相關資訊</p>
+                <thead>
+                    <tr>
+                        <th>次數</th>
+                        <th>轉保前稱號</th>
+                        <th>轉保後稱號</th>
+                        <th>轉保後稱號上限</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <p class="max">歡喜的慈雨2/4</p>
+                            <p class="mini">歡喜的慈雨1/4 +25隻</p>
+                        </td>
+                        <td>
+                            <p>奔跑的春風0/4</p>
+                        </td>
+                        <td>
+                            <p>無盡的青空以上</p>
+                        </td>
+                    </tr>
+                    <tr onclick="location.href='http://www.google.com'">
+                        <td>2..</td>
+                        <td>
+                            <p class="max">搖曳的金星2/4</p>
+                            <p class="mini">搖曳的金星0/4+65隻</p>
+                        </td>
+                        <td>
+                            <p>奔跑的春風0/4</p>
+                        </td>
+                        <td>
+                            <p class="max">歡喜的慈雨又3/4</p>
+                            <p class="mini">歡喜的慈雨1/4以上</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <p class="max">蒼之風雲2/4</p>
+                            <p class="mini">蒼之風雲0/4</p>
+                        </td>
+                        <td>
+                            <p class="max">地上的月影又3/4</p>
+                            <p class="mini">地上的月影2/4</p>
+                        </td>
+                        <td>
+                            <p class="max">搖曳的金星2/4</p>
+                            <p class="mini">搖曳的金星0/4以上</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            <p class="max">奔跑的春風2/4</p>
+                            <p class="mini">奔跑的春風0/4+40隻</p>
+                        </td>
+                        <td>
+                            <p class="max">地上的月影又1/4</p>
+                            <p class="mini">地上的月影0/4</p>
+                        </td>
+                        <td>
+                            <p class="max">蒼之風雲2/4</p>
+                            <p class="mini">蒼之風雲0/4</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            <p class="max">地上的月影3/4</p>
+                            <p class="mini">地上的月影1/4 + 35隻</p>
+                        </td>
+                        <td>
+                            <p class="max">呢喃的歌聲2/4</p>
+                            <p class="mini">呢喃的歌聲1/4</p>
+                        </td>
+                        <td>
+                            <p class="max">奔跑的春風2/4</p>
+                            <p class="mini">奔跑的春風0/4以上</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>
+                            <p class="max">地上的月影1/4</p>
+                            <p class="mini">呢喃的歌聲3/4 + 15隻</p>
+                        </td>
+                        <td>
+                            <p class="max">呢喃的歌聲1/4</p>
+                            <p class="mini">呢喃的歌聲0/4</p>
+                        </td>
+                        <td>
+                            <p class="max">地上的月影3/4</p>
+                            <p class="mini">地上的月影1/4以上</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>
+                            <p class="max">呢喃的歌聲3/4</p>
+                            <p class="mini">呢喃的歌聲1/4 + 20隻</p>
+                        </td>
+                        <td>
+                            <p class="max">呢喃的歌聲0/4</p>
+                            <p class="mini">水面上的小草3/4</p>
+                        </td>
+                        <td>
+                            <p class="max">地上的月影1/4</p>
+                            <p class="mini">呢喃的歌聲3/4以上</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>
+                            <p class="max">呢喃的歌聲2/4</p>
+                            <p class="mini">呢喃的歌聲0/4 + 10隻</p>
+                        </td>
+                        <td>
+                            <p class="max">水面上的小草3/4</p>
+                            <p class="mini">水面上的小草1/4</p>
+                        </td>
+                        <td>
+                            <p class="max">地上的月影0/4</p>
+                            <p class="mini">呢喃的歌聲1/4以上</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>
+                            <p class="max">呢喃的歌聲1/4</p>
+                            <p class="mini">水面上的小草2/4 + 10隻</p>
+                        </td>
+                        <td>
+                            <p class="max">水面上的小草2/4</p>
+                            <p class="mini">水面上的小草0/4</p>
+                        </td>
+                        <td>
+                            <p class="max">呢喃的歌聲2/4</p>
+                            <p class="mini">呢喃的歌聲0/4以上</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--<script src="js/main.js"></script>-->
+    <script type="text/javascript">
+    var prestige = [0, 800, 1600, 5600, 15200, 28000, 45600, 64000, 92800, 121600, 152000];
+    var delta = [800, 800, 4000, 9600, 12800, 17600, 18400, 28800, 28800, 30400, 0];
+    var currentPrestige = 0;
+    var targetPrestige = 0;
+
+    function calcCurrent() {
+        var current = document.getElementById("selectCurrent").value;
+        var rate = document.getElementById("currentRate").value;
+        currentPrestige = prestige[current] + delta[current] * rate * 0.01;
+        document.getElementById("currentValue").innerHTML = "當前聲望值約：" + currentPrestige;
+    };
+
+    function calcGoal() {
+        var target = document.getElementById("selectTarget").value;
+        var rate = document.getElementById("targetRate").value;
+        targetPrestige = prestige[target] + delta[target] * rate * 0.01;
+        document.getElementById("targetValue").innerHTML = "目標聲望值：" + targetPrestige;
+    };
+
+    function calcTimes() {
+        var transValue = currentPrestige;
+        var trans = [];
+        var message = "";
+        var show = "";
+        var cumulate = document.getElementById("cumulate").checked;
+        if (transValue < 800) {
+            show = "建議您先提升稱號至少達「路旁的落葉」後再進行轉保。";
+        } else {
+            if (cumulate) {
+                while (transValue < targetPrestige) {
+                    transValue = Math.floor(transValue * 1.5);
+                    message = getPrestigeWord(transValue);
+                    trans.push(message);
+                }
+            } else if (!cumulate && transValue < 2600) {
+                show = "稱號低於水面上的小草1/4，無法忽略隱藏聲望，請以「累計隱藏聲望值」計算。";
+            } else {
+                while (transValue < targetPrestige) {
+                    transValue = Math.floor(transValue * 1.5);
+                    message = getPrestigeWord(transValue);
+                    transValue = prestigeFloor(transValue);
+                    trans.push(message);
+                }
+            }
+            for (var i = 0; i < trans.length; i++) {
+                show = show + "<br>第" + (i + 1) + "次轉保後上限約為：" + trans[i];
+            };
+        }
+        document.getElementById("transMessage").innerHTML = show;
+    };
+
+    function prestigeFloor(prestigeValue) {
+        var wordPtr = 0,
+            ratePtr = 0,
+            floor = 0;
+        for (wordPtr = 0; prestigeValue >= prestige[wordPtr + 1] && wordPtr < 10; wordPtr++) {;
+        };
+        ratePtr = Math.floor((prestigeValue - prestige[wordPtr]) / delta[wordPtr] * 4);
+        if (wordPtr < 10) {
+            floor = prestige[wordPtr] + (delta[wordPtr] * ratePtr) / 4;
+        } else {
+            floor = 152000;
+        }
+        return floor;
+    };
+
+    function getPrestigeWord(prestigeValue) {
+        var prestigeWord = ["無名的旅人", "路旁的落葉", "水面上的小草", "呢喃的歌聲", "地上的月影", "奔跑的春風", "蒼之風雲", "搖曳的金星", "歡喜的慈雨", "蘊含的太陽", "敬畏的寂靜"];
+        var percent = ["0/4", "1/4", "1/2", "3/4"];
+        var wordPtr = 0,
+            ratePtr = 0,
+            message = "";
+        for (wordPtr = 0; prestigeValue >= prestige[wordPtr + 1] && wordPtr < 10; wordPtr++) {;
+        };
+        ratePtr = Math.floor((prestigeValue - prestige[wordPtr]) / delta[wordPtr] * 4);
+        if (wordPtr < 10) {
+            message = prestigeWord[wordPtr] + "又" + percent[ratePtr] + "。";
+        } else {
+            message = prestigeWord[wordPtr] + "以上。";
+        }
+        return message;
+    };
+
+    function showAccurate() {
+        var accurate = document.getElementById("accurate").checked;
+        var mini = document.getElementsByClassName("mini");
+        var max = document.getElementsByClassName("max");
+        if (accurate) {
+            for (var i = 0; i < mini.length; i++) {
+                mini[i].style.visibility = "visible";
+                mini[i].style.height = "10px";
+            };
+            for (var i = 0; i <max.length; i++) {
+                max[i].style.textDecoration ="line-through";
+            };
+        } else {
+            for (var i = 0; i < mini.length; i++) {
+                mini[i].style.visibility = "hidden";
+                mini[i].style.height = "0px";
+            };
+            for (var i = 0; i <max.length; i++) {
+                max[i].style.textDecoration ="";
+            };
+        }
+    };
+    </script>
+</body>
+<style type="text/css">
+input[type=radio],
+input[type=submit] {
+    margin-top: 10px;
+    margin-right: 6px;
+}
+
+.mini {
+    visibility: hidden;
+    height: 0px;
+    color: red;
+}
+</style>
+
+</html>
